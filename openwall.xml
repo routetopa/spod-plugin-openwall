@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prefix label="Open wall" language_label="English" language_tag="en" name="openwall">
+    <key name="main_menu_item">
+        <value>Open wall</value>
+    </key>
+    <key name="index_page_heading">
+        Welcome to Route to PA
+    </key>
+</prefix>
