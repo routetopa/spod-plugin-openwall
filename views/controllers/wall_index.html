@@ -34,8 +34,8 @@
                     <td style="width: 100%; padding-top: 2em;">
 
                         <div id="datalet_placeholder_2" class="style-scope data-sevc-controllet">
-                            <link rel="import" href="http://service.routetopa.eu/DEEalerProvider/COMPONENTS/datalets/leafletjs-datalet/leafletjs-datalet.html">
-                            <leafletjs-datalet data-url="http://ckan.routetopa.eu/api/action/datastore_search?resource_id=73e02092-85a1-434e-85fe-0c9a43aa9a52&amp;limit=10000" query="$['result']['records'][*]['Lat']###$['result']['records'][*]['Lng']###$['result']['records'][*]['Link']"></leafletjs-datalet>
+                            <link href="http://service.routetopa.eu/DEEalerProvider/COMPONENTS/datalets/leafletjs-datalet/leafletjs-datalet.html" rel="import">
+                            <leafletjs-datalet fields='["result,records,Lat","result,records,Lng","result,records,Link"]' fields-order="" data-url="http://ckan.routetopa.eu/api/action/datastore_search?resource_id=73e02092-85a1-434e-85fe-0c9a43aa9a52&limit=10000"></leafletjs-datalet>
                         </div>
 
                         <div class="ow_right">
