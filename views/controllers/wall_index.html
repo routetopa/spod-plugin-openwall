@@ -18,11 +18,9 @@
             <table border="0" style="width: 100%;">
                 <tr>
                     <td style="width: 100%;">
-
-                        <div id="datalet_placeholder" class="style-scope data-sevc-controllet">
-                            <link rel="import" href="http://service.routetopa.eu/DEEalerProvider/COMPONENTS/datalets/linechart-datalet/linechart-datalet.html">
-                            <linechart-datalet data-url="http://ckan.routetopa.eu/api/action/datastore_search?resource_id=0cb600fc-19ad-4aaf-9794-1e6ea851840a&amp;limit=10000" query="$['result']['records'][*]['descrizione']###$['result']['records'][*]['movimento']"></linechart-datalet>
-                        </div>
+                        
+                        <link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/linechart-datalet/linechart-datalet.html">
+                        <linechart-datalet data-url='http://ckan.routetopa.eu/api/action/datastore_search?resource_id=07843fc3-07e1-4c66-9be4-fed43ca4a26f' fields='["result,records,Categoria","result,records,Risorsa"]'></linechart-datalet>
 
                         <div class="ow_right">
                             {decorator name="button" langLabel="openwall+open_post" onclick="location.href='/'"}</a>
@@ -34,7 +32,7 @@
                     <td style="width: 100%; padding-top: 2em;">
 
                         <div id="datalet_placeholder_2" class="style-scope data-sevc-controllet">
-                            <link href="http://service.routetopa.eu/DEEalerProvider/COMPONENTS/datalets/leafletjs-datalet/leafletjs-datalet.html" rel="import">
+                            <link href="http://deep.routetopa.eu/COMPONENTS/datalets/leafletjs-datalet/leafletjs-datalet.html" rel="import">
                             <leafletjs-datalet fields='["result,records,Lat","result,records,Lng","result,records,Link"]' fields-order="" data-url="http://ckan.routetopa.eu/api/action/datastore_search?resource_id=73e02092-85a1-434e-85fe-0c9a43aa9a52&limit=10000"></leafletjs-datalet>
                         </div>
 
