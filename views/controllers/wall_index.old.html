@@ -1,0 +1,61 @@
+<div style="margin-bottom: 1.5em;">
+    {text key='openwall+front_description'}
+</div>
+
+<hr>
+
+<table border="0" style="width: 100%;">
+    <tr>
+        <td style="width: 66%;">
+            <h4>{text key='openwall+heading_popular_topic'}</h4>
+        </td>
+        <td>
+            <h4>{text key='openwall+heading_news'}</h4>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" style="width: 100%;">
+                <tr>
+                    <td style="width: 100%;">
+
+                        <link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/linechart-datalet/linechart-datalet.html">
+                        <linechart-datalet data-url='http://ckan.routetopa.eu/api/action/datastore_search?resource_id=07843fc3-07e1-4c66-9be4-fed43ca4a26f' fields='["result,records,Categoria","result,records,Risorsa"]'></linechart-datalet>
+
+                        <div class="ow_right">
+                            {decorator name="button" langLabel="openwall+open_post" onclick="location.href='/'"}</a>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 100%; padding-top: 2em;">
+
+                        <div id="datalet_placeholder_2" class="style-scope data-sevc-controllet">
+                            <link href="http://deep.routetopa.eu/COMPONENTS/datalets/leafletjs-datalet/leafletjs-datalet.html" rel="import">
+                            <leafletjs-datalet fields='["result,records,Lat","result,records,Lng","result,records,Link"]' fields-order="" data-url="http://ckan.routetopa.eu/api/action/datastore_search?resource_id=73e02092-85a1-434e-85fe-0c9a43aa9a52&limit=10000"></leafletjs-datalet>
+                        </div>
+
+                        <div class="ow_right">
+                            {decorator name="button" langLabel="openwall+open_post" onclick="location.href='/'"}</a>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        <td>
+            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/RouteToPA" data-widget-id="646276364832739328">Tweet di @RouteToPA</a>
+            {literal}
+            <script>
+                $(function(){
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+                });
+            </script>
+            {/literal}
+        </td>
+    </tr>
+</table>
+
+
