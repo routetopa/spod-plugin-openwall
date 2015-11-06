@@ -58,7 +58,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         $odProvider = empty($preference) ? "http://ckan.routetopa.eu" : $preference->defaultValue;
 
         /*
-         * $odProvider = 'https://data.issy.com';
+        $odProvider = 'https://data.issy.com';
         $odProvider .= ',http://ckan.routetopa.eu';
         $odProvider .= ',http://dati.lazio.it/catalog';
         $odProvider .= ',https://data.gov.uk';
