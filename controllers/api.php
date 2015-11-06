@@ -54,20 +54,49 @@ class OPENWALL_CTRL_Api extends OW_ActionController
 
     public function datasetTree()
     {
-        $preference = BOL_PreferenceService::getInstance()->findPreference('od_provider');
-        $odProvider = empty($preference) ? "http://ckan.routetopa.eu" : $preference->defaultValue;
+        //$preference = BOL_PreferenceService::getInstance()->findPreference('od_provider');
+        //$odProvider = empty($preference) ? "http://ckan.routetopa.eu" : $preference->defaultValue;
+        //$providers = explode(',', $odProvider);
 
         /*
-        $odProvider = 'https://data.issy.com';
-        $odProvider .= ',http://ckan.routetopa.eu';
-        $odProvider .= ',http://dati.lazio.it/catalog';
-        $odProvider .= ',https://data.gov.uk';
-        $odProvider .= ',http://vmdatagov01.deri.ie:8080';
-        $odProvider .= ',https://data.overheid.nl/data';
-        $odProvider .= ',https://data.gov.ie';
-        */
+         * NOTE: This is a temporary solution. The datalet will be customizable in
+         * future versions.
+         */
 
-        $providers = explode(',', $odProvider);
+        $providers = null;
+        $hostname = gethostname();
+        switch ($hostname) {
+            case 'prato.routetopa.eu';
+                $providers = [
+                    'http://dati.lazio.it/catalog' ];
+                break;
+            case 'issy.routetopa.eu';
+                $providers = [
+                    'https://data.issy.com',
+                    'http://data.iledefrance.fr' ];
+                break;
+            case 'dublin.routetopa.eu';
+                $providers = [
+                    'https://data.gov.ie' ];
+                break;
+            case 'denhaag.routetopa.eu';
+            case 'groningen.routetopa.eu';
+                $providers = [
+                    'https://data.overheid.nl/data' ];
+                break;
+            default:
+                $providers = [
+                    'https://data.issy.com',
+                    'http://dati.lazio.it/catalog',
+                    'https://data.gov.uk',
+                    'https://data.overheid.nl/data',
+                    'http://data.iledefrance.fr',
+                    'https://data.gov.ie' ];
+                break;
+        }
+        $providers[] = 'http://ckan.routetopa.eu';
+        $providers[] = 'http://vmdatagov01.deri.ie:8080';
+
         $treemapdata = [];
         foreach ($providers as $p) {
             // Try CKAN
