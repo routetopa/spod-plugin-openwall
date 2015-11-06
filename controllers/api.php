@@ -57,15 +57,17 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         $preference = BOL_PreferenceService::getInstance()->findPreference('od_provider');
         $odProvider = empty($preference) ? "http://ckan.routetopa.eu" : $preference->defaultValue;
 
-        $odProvider = 'https://data.issy.com';
+        /*
+         * $odProvider = 'https://data.issy.com';
         $odProvider .= ',http://ckan.routetopa.eu';
         $odProvider .= ',http://dati.lazio.it/catalog';
         $odProvider .= ',https://data.gov.uk';
         $odProvider .= ',http://vmdatagov01.deri.ie:8080';
         $odProvider .= ',https://data.overheid.nl/data';
         $odProvider .= ',https://data.gov.ie';
-        $providers = explode(',', $odProvider);
+        */
 
+        $providers = explode(',', $odProvider);
         $treemapdata = [];
         foreach ($providers as $p) {
             // Try CKAN
