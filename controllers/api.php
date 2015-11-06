@@ -62,6 +62,8 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         $odProvider .= ',http://dati.lazio.it/catalog';
         $odProvider .= ',https://data.gov.uk';
         $odProvider .= ',http://vmdatagov01.deri.ie:8080';
+        $odProvider .= ',https://data.overheid.nl/data';
+        $odProvider .= ',https://data.gov.ie';
         $providers = explode(',', $odProvider);
 
         $treemapdata = [];
