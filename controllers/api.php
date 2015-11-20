@@ -11,6 +11,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     }
 
     private function buildCkanTree($p, $data) {
+        $lintHost = parse_url($p, PHP_URL_HOST);
         $treemapdata = array();
         $datasets = $data['result']['results'];
         $datasetsCnt = count( $datasets );
@@ -25,7 +26,8 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                     'resource_name' => array_key_exists('name', $r) ? $r['name'] : $r['description'],
                     'package_name' => $ds['title'],
                     'organization_name' => array_key_exists('organization', $ds) ? $ds['organization']['title'] : '',
-                    'url' => $r['url'],
+                    //'url' => $r['url'],
+                    'url' => str_replace(parse_url($r['url'], PHP_URL_HOST), $lintHost, $r['url']),
                     'w' => 1
                 );
             }
