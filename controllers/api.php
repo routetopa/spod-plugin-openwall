@@ -11,7 +11,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     }
 
     private function buildCkanTree($p, $data) {
-        $lintHost = parse_url($p, PHP_URL_HOST);
+        //$lintHost = parse_url($p, PHP_URL_HOST);
         $treemapdata = array();
         $datasets = $data['result']['results'];
         $datasetsCnt = count( $datasets );
@@ -22,12 +22,13 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             for ($j = 0; $j < $resourcesCnt; $j++) {
                 $r = $resources[$j];
                 $treemapdata[] = array(
-                    'provider_name' => parse_url($p, PHP_URL_HOST),
+                    //'provider_name' => parse_url($p, PHP_URL_HOST),
+                    'provider_name' => 'p:' . $p->id,
                     'resource_name' => array_key_exists('name', $r) ? $r['name'] : $r['description'],
                     'package_name' => $ds['title'],
                     'organization_name' => array_key_exists('organization', $ds) ? $ds['organization']['title'] : '',
-                    //'url' => $r['url'],
-                    'url' => str_replace(parse_url($r['url'], PHP_URL_HOST), $lintHost, $r['url']),
+                    'url' => $r['url'],
+                    //'url' => str_replace(parse_url($r['url'], PHP_URL_HOST), $lintHost, $r['url']),
                     'w' => 1
                 );
             }
@@ -43,11 +44,11 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $ds = $datasets[$i];
 
             $treemapdata[] = array(
-                'provider_name' => parse_url($p, PHP_URL_HOST),
+                'provider_name' => 'p:' . $p->id,
                 'organization_name' => $ds['metas']['publisher'],
                 'package_name' => $ds['metas']['title'],
                 'resource_name' => 'Click to open', //array_key_exists('name', $r) ? $r['name'] : $r['description'],
-                'url' => $p . '/explore/dataset/' . $ds['datasetid'],
+                'url' => $p->api_url . '/explore/dataset/' . $ds['datasetid'],
                 'w' => 1
             );
         }
@@ -56,15 +57,9 @@ class OPENWALL_CTRL_Api extends OW_ActionController
 
     public function datasetTree()
     {
-        //$preference = BOL_PreferenceService::getInstance()->findPreference('od_provider');
-        //$odProvider = empty($preference) ? "http://ckan.routetopa.eu" : $preference->defaultValue;
-        //$providers = explode(',', $odProvider);
+        $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
 
         /*
-         * NOTE: This is a temporary solution. The datalet will be customizable in
-         * future versions.
-         */
-
         $providers = null;
         $hostname = gethostname();
         switch ($hostname) {
@@ -98,11 +93,16 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         }
         $providers[] = 'http://ckan.routetopa.eu';
         $providers[] = 'http://vmdatagov01.deri.ie:8080';
+        */
 
+        $providersdata = [];
         $treemapdata = [];
         foreach ($providers as $p) {
+            // Build providers info
+            $providersdata[$p->id] = $p;
+
             // Try CKAN
-            $ch = curl_init("$p/api/3/action/package_search");
+            $ch = curl_init($p->api_url . "/api/3/action/package_search");
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -135,7 +135,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         }
 
         header('content-type: application/json');
-        echo json_encode( array( 'result' => $treemapdata ));
+        echo json_encode( array( 'result' => array( 'providers' => $providersdata, 'datasets' => $treemapdata )));
         die();
     }
 

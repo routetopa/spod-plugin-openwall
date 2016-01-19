@@ -1,0 +1,20 @@
+<table class="ow_table_1 ow_automargin" style="width: 400px;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>API Base URL</th>
+        </tr>
+    </thead>
+    {foreach from=$providers item=provider name=provider key=id}
+    <tr class="{cycle values='ow_alt1,ow_alt2'} {if $smarty.foreach.provider.last}ow_tr_last{/if} {if $smarty.foreach.provider.first}ow_tr_first{/if}">
+        <td width="1"><a href="{$deleteUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="width:16px; height:16px; display:block; margin:0 auto;background-repeat:no-repeat;background-position: 50% 50%;" class="ow_ic_delete"></a></td>
+        <td>{$provider.title}</td>
+        <td>{$provider.description}</td>
+        <td>{$provider.api_url}</td>
+    </tr>
+    {/foreach}
+</table>
+
+{*<a href="{$deleteCatUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="width:16px; height:16px; display:block; margin:0 auto;background-repeat:no-repeat;background-position: 50% 50%;" class="ow_ic_delete"></a>*}
