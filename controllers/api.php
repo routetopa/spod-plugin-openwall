@@ -118,7 +118,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             }
 
             // Try ODS
-            $ch = curl_init("$p/api/datasets/1.0/search/");
+            $ch = curl_init($p->api_url . "/api/datasets/1.0/search/");
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
