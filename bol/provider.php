@@ -53,4 +53,8 @@ class OPENWALL_BOL_Provider extends OW_Entity
      * @var string
      */
     public $imageHash;
+
+    public $logo_url = 'logo_url';
+
+    public $description = 'description';
 }
