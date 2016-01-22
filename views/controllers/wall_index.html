@@ -2,9 +2,53 @@
     {text key='openwall+front_description'}
 </div>
 
+<h4>Activities</h4>
+<div class="clearfix">
+    <div style="width: 50%; float: left">
+
+        <div style="width: 100%; height: 2em;">&nbsp;</div>
+
+        <p>There are {count($usersIds)} users online.</p>
+        {foreach from=$usersIds item=id}
+            {decorator
+                name="avatar_item"
+                url=$usersInfo.urls.$id
+                src=$usersInfo.avatars.$id
+                label=$usersInfo.roleLabels.$id.label
+                labelColor=$usersInfo.roleLabels.$id.labelColor}
+        {/foreach}
+
+        {if !empty($latestPublicRooms)}
+        <div style="width: 100%; height: 2em;">&nbsp;</div>
+        <p>
+            The last public room created in the Agor&agrave; is:
+            <a href="/public-room/#!/{$latestPublicRooms.0->id}">{$latestPublicRooms.0->subject}</a>.
+        </p>
+        {/if}
+
+        <div style="width: 100%; height: 2em;">&nbsp;</div>
+        <h5>Meet the Datalets!</h5>
+        <p>
+            A <b>datalet</b> is a reusable component able to load data from an Open Data source,
+            filter it and visualise it. Datalets are the building block of discussions in SPOD.
+            On the right, you can see the latest datalet created in our platform.
+        </p>
+    </div>
+    <div style="width: 50%; margin-left: 50%">
+        {if !empty($latestDatalets)}
+        <div id="openwall_datalet_1" style="width:100%;">
+            <link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
+            <{$latestDatalets.0.component}
+            data-url="{$latestDatalets.0.params['data-url']}"
+            fields='[{$latestDatalets.0.fields}]'
+            ></{$latestDatalets.0.component}>
+        </div>
+    {/if}
+    </div>
+</div>
+
 <hr>
 
-<link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
 <h3>{text key='openwall+explore_datasets_heading'}</h3>
 <div class="clearfix" style="padding-bottom: 1.2em;">
     <img style="float: left; width: 100px;" src="/ow_static/plugins/openwall/images/explore.png">
@@ -13,9 +57,8 @@
     </div>
 </div>
 
+<link rel="import" href="/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
 <datasetexplorer-datalet
         data-url="/openwall/api/datasetTree"
         fields='["result,datasets,provider_name","result,datasets,organization_name","result,datasets,package_name","result,datasets,resource_name","result,datasets,url","result,datasets,w"]'
-
         ></datasetexplorer-datalet>
-
