@@ -1,20 +1,55 @@
-<table class="ow_table_1 ow_automargin" style="width: 400px;">
+<style>
+    .ow_ic_delete {
+        width:16px;
+        height:16px;
+        display:block;
+        margin:0 auto;
+        background-repeat:no-repeat;
+        background-position: 50% 50%;
+    }
+</style>
+
+{form name='insertProvider'}
+<table class="ow_table_1 ow_form ow_automargin">
+    <tr class="ow_alt1">
+        <td class="ow_value">TITLE</td>
+        <td class="ow_value">{input name='title'}</td>
+    </tr>
+    <tr class="ow_alt1">
+        <td class="ow_value">DESCRIPTION</td>
+        <td class="ow_value">{input name='description'}</td>
+    </tr>
+    <tr class="ow_alt1">
+        <td class="ow_value">API URL</td>
+        <td class="ow_value">{input name='api_url'}</td>
+    </tr>
+    <tr class="ow_alt1">
+        <td class="ow_value">LOGO URL</td>
+        <td class="ow_value">{input name='image_hash'}</td>
+    </tr>
+    <tr>
+        <td colspan="2" class="ow_center">{submit name='addProvider' class='ow_button ow_ic_save'}</td>
+    </tr>
+</table>
+{/form}
+
+<table class="ow_table_1 ow_automargin">
     <thead>
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>API Base URL</th>
+        <tr class="ow_alt1">
+            <th class="ow_value"></th>
+            <th class="ow_value">TITLE</th>
+            <th class="ow_value">DESCRIPTION</th>
+            <th class="ow_value">API URL</th>
+            <th class="ow_value">LOGO URL</th>
         </tr>
     </thead>
     {foreach from=$providers item=provider name=provider key=id}
     <tr class="{cycle values='ow_alt1,ow_alt2'} {if $smarty.foreach.provider.last}ow_tr_last{/if} {if $smarty.foreach.provider.first}ow_tr_first{/if}">
-        <td width="1"><a href="{$deleteUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="width:16px; height:16px; display:block; margin:0 auto;background-repeat:no-repeat;background-position: 50% 50%;" class="ow_ic_delete"></a></td>
+        <td><a href="{$deleteUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="" class="ow_ic_delete"></a></td>
         <td>{$provider.title}</td>
         <td>{$provider.description}</td>
         <td>{$provider.api_url}</td>
+        <td>{$provider.image_hash}</td>
     </tr>
     {/foreach}
 </table>
-
-{*<a href="{$deleteCatUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="width:16px; height:16px; display:block; margin:0 auto;background-repeat:no-repeat;background-position: 50% 50%;" class="ow_ic_delete"></a>*}

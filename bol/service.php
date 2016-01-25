@@ -70,17 +70,19 @@ class OPENWALL_BOL_Service
         return OW::getLanguage()->text('openwall', $this->getProviderKey($id));
     }
 
-    public function addProvider( $title, $description, $api_url )
+    public function addProvider( $title, $description, $api_url,  $image_hash)
     {
         $provider = new OPENWALL_BOL_Provider();
         $provider->title = trim($title);
         $provider->api_url = trim($api_url);
+        $provider->image_hash = trim($image_hash);
+//        $provider->description = trim($description);/**/
         OPENWALL_BOL_ProviderDao::getInstance()->save($provider);
         BOL_LanguageService::getInstance()->addValue(
             OW::getLanguage()->getCurrentId(),
             'openwall',
             $this->getProviderKey($provider->id),
-            trim($description) ?: ' ');
+            trim($description));
     }
 
     public function deleteProvider( $id )
