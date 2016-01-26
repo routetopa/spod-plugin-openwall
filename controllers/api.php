@@ -135,6 +135,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         }
 
         header('content-type: application/json');
+        header("Access-Control-Allow-Origin: *");
         echo json_encode( array( 'result' => array( 'providers' => $providersdata, 'datasets' => $treemapdata )));
         die();
     }
