@@ -1,64 +1,136 @@
-<div style="margin-bottom: 1.5em;">
-    {text key='openwall+front_description'}
-</div>
+<style>
+    div.split {
+        background-color: whitesmoke;
+        display: flex;
+        width: 100%;
+        margin-top: 1.5em;
+    }
 
-<h4>Activities</h4>
-<div class="clearfix">
-    <div style="width: 50%; float: left">
+    div.activities {
+        width: 50%;
+    }
 
-        <div style="width: 100%; height: 2em;">&nbsp;</div>
+    div.activities p {
+        margin-bottom: 16px;
+    }
 
-        <p>There are {count($usersIds)} users online.</p>
-        {foreach from=$usersIds item=id}
-            {decorator
-                name="avatar_item"
-                url=$usersInfo.urls.$id
-                src=$usersInfo.avatars.$id
-                label=$usersInfo.roleLabels.$id.label
-                labelColor=$usersInfo.roleLabels.$id.labelColor}
-        {/foreach}
+    div.activities b {
+        color:#2196F3;
+    }
+
+    div.datalet {
+        width: 50%;
+        overflow: hidden;
+    }
+
+    div.explorer {
+        border-top: 2px solid #2196F3;
+        margin: 16px 0px 16px 0px;
+        padding-top: 16px;
+    }
+
+    div.explorer img {
+        float: left;
+        width: 100px;
+    }
+
+    div.datasets_instructions {
+        margin-left: 116px;
+        height: 94px;
+        /*font-size: 120%;*/
+        /*line-height: 22px;*/
+        /*font-weight: 300;*/
+        /*text-align: justify;"*/
+    }
+
+    div.datasets_instructions h4 {
+        padding-top: 16px;
+    }
+
+    h4 {
+        margin: 0px 0px 16px 0px;
+    }
+
+    ul{
+        list-style-type: square;
+        padding-left: 32px;
+    }
+</style>
+
+
+{text key='openwall+front_description'}
+
+
+<div class="split">
+    <div class="activities">
+        <h4>{text key='openwall+activities'}</h4>
+
+        <p>
+            {text key='openwall+users_online'}
+            <b>{count($usersIds)}</b>.
+        </p>
 
         {if !empty($latestPublicRooms)}
-        <div style="width: 100%; height: 2em;">&nbsp;</div>
         <p>
-            The last public room created in the Agor&agrave; is:
+            {text key='openwall+last_room'}
             <a href="/public-room/#!/{$latestPublicRooms.0->id}">{$latestPublicRooms.0->subject}</a>.
         </p>
         {/if}
 
-        <div style="width: 100%; height: 2em;">&nbsp;</div>
-        <h5>Meet the Datalets!</h5>
+        <h4>{text key='openwall+meet_datalet'}</h4>
+
         <p>
-            A <b>datalet</b> is a reusable component able to load data from an Open Data source,
-            filter it and visualise it. Datalets are the building block of discussions in SPOD.
-            On the right, you can see the latest datalet created in our platform.
+            {text key='openwall+datalet_description'}
         </p>
     </div>
-    <div style="width: 50%; margin-left: 50%">
+    <div class="datalet">
+
         {if !empty($latestDatalets)}
-        <div id="openwall_datalet_1" style="width:100%;">
-            <link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
-            <{$latestDatalets.0.component}
-            data-url="{$latestDatalets.0.params['data-url']}"
-            fields='[{$latestDatalets.0.fields}]'
-            ></{$latestDatalets.0.component}>
-        </div>
-    {/if}
+                <!--<link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />-->
+                <link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
+                <{$latestDatalets.0.component}
+                data-url="{$latestDatalets.0.params['data-url']}"
+                title ="{$latestDatalets.0.params['title']}"
+                description ="{$latestDatalets.0.params['description']}"
+                fields='[{$latestDatalets.0.fields}]'>
+                </{$latestDatalets.0.component}>
+        {/if}
+
     </div>
 </div>
 
-<hr>
+<div class="explorer">
 
-<h3>{text key='openwall+explore_datasets_heading'}</h3>
-<div class="clearfix" style="padding-bottom: 1.2em;">
-    <img style="float: left; width: 100px;" src="/ow_static/plugins/openwall/images/explore.png">
-    <div style="margin-left: 120px; font-size: 120%; line-height: 1.4em; font-weight: 300; text-align: justify;">
-        {text key='openwall+explore_datasets_instructions'}
+    <!--<img src="/ow_static/plugins/openwall/images/explore.png">-->
+    <img src="/ow_static/plugins/openwall/images/explore.png">
+    <div class="datasets_instructions">
+        <h4>{text key='openwall+explore_datasets_heading'}</h4>
     </div>
+
+    {text key='openwall+explore_datasets_instructions'}
+    <ul>
+        <li><a href="http://srvgal100.deri.ie:8081/" target="_blank">TET v.0.1 @ Galway (Ireland)</a></li>
+        <li><a href="http://ckan.routetopa.eu/" target="_blank">Example CKAN with data from out pilots (Prato, Groiningen, Den Haag)</a></li>
+        <li><a href="https://data.gov.uk/" target="_blank">data.gov.uk (UK)</a></li>
+        <li><a href="http://data.issy.com/page/home/" target="_blank">data.issy.com (from OpenDataSoft, France)</a></li>
+        <li><a href="https://data.overheid.nl/" target="_blank">Dataportaal van de Nederlandse overheid (Netherland)</a></li>
+        <li><a href="https://dati.lazio.it/" target="_blank">Open data Regione Lazio (Italy)</a></li>
+        <li><a href="https://data.gov.ie/" target="_blank">Ireland's Open Data Portal (Ireland)</a></li>
+        <li><a href="http://www.iledefrance.fr/" target="_blank">French Open Data Portal (France)</a></li>
+    </ul>
 </div>
 
+<!--<link rel="import" href="/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />-->
+<!--data-url="/openwall/api/datasetTree"-->
 <link rel="import" href="/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
 <datasetexplorer-datalet
         data-url="/openwall/api/datasetTree"
-        fields='["result,datasets,provider_name","result,datasets,organization_name","result,datasets,package_name","result,datasets,resource_name","result,datasets,url","result,datasets,w"]'
-        ></datasetexplorer-datalet>
+        fields='["result,datasets,provider_name", "result,datasets,organization_name",
+            "result,datasets,package_name", "result,datasets,resource_name", "result,datasets,url", "result,datasets,w"]'>
+</datasetexplorer-datalet>
+
+<script>
+    $(function () {
+        $(window).resize();
+    });
+</script>

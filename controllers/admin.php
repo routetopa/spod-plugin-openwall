@@ -47,8 +47,8 @@ class OPENWALL_CTRL_Admin extends ADMIN_CTRL_Abstract
 
     public function treemap()
     {
-        $this->setPageTitle(OW::getLanguage()->text('openwall', 'admin_treemap_title'));//Openwall Settings
-        $this->setPageHeading(OW::getLanguage()->text('openwall', 'admin_treemap_heading'));//OPENWALL - PLUGIN SETTINGS
+        $this->setPageTitle(OW::getLanguage()->text('openwall', 'admin_title'));//Openwall Settings
+        $this->setPageHeading(OW::getLanguage()->text('openwall', 'admin_heading'));//OPENWALL - PLUGIN SETTINGS
 
         $form = new Form('insertProvider');
         $this->addForm($form);

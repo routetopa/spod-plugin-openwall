@@ -94,7 +94,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->setPageHeading(OW::getLanguage()->text('openwall', 'index_page_heading'));
         $this->setDocumentKey('openwall_index_page');
 
-        $this->getLatestDatalets(3);
+        $this->getLatestDatalets(1);
         $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
     }
