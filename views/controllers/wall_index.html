@@ -86,8 +86,8 @@
     <div class="datalet">
 
         {if !empty($latestDatalets)}
-                <!--<link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />-->
-                <link rel="import" href="/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
+                <!--<link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />-->
+                <link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
                 <{$latestDatalets.0.component}
                 data-url="{$latestDatalets.0.params['data-url']}"
                 title ="{$latestDatalets.0.params['title']}"
@@ -120,9 +120,9 @@
     </ul>
 </div>
 
-<!--<link rel="import" href="/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />-->
+<!--<link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />-->
 <!--data-url="/openwall/api/datasetTree"-->
-<link rel="import" href="/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
+<link rel="import" href="http://deep.routetopa.eu/COMPONENTS/datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
 <datasetexplorer-datalet
         data-url="/openwall/api/datasetTree"
         fields='["result,datasets,provider_name", "result,datasets,organization_name",
