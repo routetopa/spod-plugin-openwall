@@ -112,7 +112,12 @@
     </ul>
 </div>
 
-<iframe src="{$staticResourcesUrl}pages/explorer.html" style="width: 102%;height: 105vh;"></iframe>
+<link rel="import" href="{$components_url}datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
+<datasetexplorer-datalet
+        data-url="openwall/api/datasetTree"
+        fields='["result,datasets,provider_name", "result,datasets,organization_name",
+                    "result,datasets,package_name", "result,datasets,resource_name", "result,datasets,url", "result,datasets,w"]'>
+</datasetexplorer-datalet>
 
 <script>
     $(function () {
