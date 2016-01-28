@@ -40,25 +40,20 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
     }
 
     function getLatestDatalets($count = 0) {
-        $example = new OW_Example();
-        $example->setOrder('timestamp DESC');
-        if ($count) {
-            $example->setLimitClause(0, $count);
-        }
 
-        $datalets = ODE_BOL_DataletDao::getInstance()->findListByExample($example);
+        $dbo = OW::getDbo();
 
-        $data = [];
+        $query = "SELECT * FROM ow_ode_datalet where id = (select max(dataletId) from ow_ode_datalet_post);";
 
-        foreach ($datalets as $d) {
-            $data[0] = [
-                'component' => $d->component,
-                'params' => json_decode($d->params, true),
-                'fields' => $d->fields
-            ];
-        }
+        $row = $dbo->queryForRow($query);
 
-        $this->assign('latestDatalets', $data);
+        $data = [
+            'component' => $row["component"],
+            'params' => json_decode($row["params"], true),
+            'fields' => $row["fields"]
+        ];
+
+        $this->assign('latestDatalet', $data);
     }
 
     function getLatestPrivateRooms($count = 0) {

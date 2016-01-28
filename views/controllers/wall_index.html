@@ -1,6 +1,6 @@
 <style>
     div.split {
-        background-color: whitesmoke;
+        /*background-color: whitesmoke;*/
         display: flex;
         width: 100%;
         margin-top: 1.5em;
@@ -81,14 +81,12 @@
     </div>
     <div class="datalet">
 
-        {if !empty($latestDatalets)}
-                <link rel="import" href="{$components_url}datalets/{$latestDatalets.0.component}/{$latestDatalets.0.component}.html" />
-                <{$latestDatalets.0.component}
-                data-url="{$latestDatalets.0.params['data-url']}"
-                title ="{$latestDatalets.0.params['title']}"
-                description ="{$latestDatalets.0.params['description']}"
-                fields='[{$latestDatalets.0.fields}]'>
-                </{$latestDatalets.0.component}>
+        {if !empty($latestDatalet)}
+                <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
+                <{$latestDatalet['component']}
+                data-url="{$latestDatalet['params']['data-url']}"
+                fields='[{$latestDatalet['fields']}]'>
+                </{$latestDatalet['component']}>
         {/if}
 
     </div>
