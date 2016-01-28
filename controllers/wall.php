@@ -99,6 +99,8 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->setPageHeading(OW::getLanguage()->text('openwall', 'index_page_heading'));
         $this->setDocumentKey('openwall_index_page');
 
+        $this->assign("staticResourcesUrl", OW::getPluginManager()->getPlugin("openwall")->getStaticUrl());
+
         $this->getLatestDatalets(1);
         $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
