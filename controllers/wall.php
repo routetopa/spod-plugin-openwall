@@ -3,6 +3,11 @@
 class OPENWALL_CTRL_Wall extends OW_ActionController
 {
 
+    public function __construct()
+    {
+        $this->assign('components_url', SPODPR_COMPONENTS_URL);
+    }
+
     function getUsersList($users) {
 
     }

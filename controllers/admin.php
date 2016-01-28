@@ -107,3 +107,48 @@ class OPENWALL_CTRL_Admin extends ADMIN_CTRL_Abstract
         $this->redirect(OW::getRouter()->urlForRoute('openwall.admin'));
     }
 }
+
+//        $form1 = new Form('settings');
+//        $this->addForm($form1);
+//
+//        /* DEEP ULR */
+//        $componentsUrl = new TextField('components_url');
+//        $preference = BOL_PreferenceService::getInstance()->findPreference('$openwall_components_url');
+//        $openwall_components_url = empty($preference) ? "http://deep.routetopa.eu/COMPONENTS/" : $preference->defaultValue;
+//        $componentsUrl->setValue($openwall_components_url);
+//        $componentsUrl->setRequired();
+//        $form1->addElement($componentsUrl);
+//
+//        if ( OW::getRequest()->isPost() && $form1->isValid($_POST))
+//        {
+//            $data = $form1->getValues();
+//
+//            /* $openwall_components_url */
+//            $preference = BOL_PreferenceService::getInstance()->findPreference('$openwall_components_url');
+//
+//            if(empty($preference))
+//                $preference = new BOL_Preference();
+//
+//            $preference->key = '$openwall_components_url';
+//            $preference->sectionName = 'general';
+//            $preference->defaultValue = $data['components_url'];
+//            $preference->sortOrder = 1;
+//            BOL_PreferenceService::getInstance()->savePreference($preference);
+//
+//        }
+//
+//        $submit = new Submit('updateSettings');
+//        $submit->setValue(OW::getLanguage()->text('openwall', 'update_submit'));//ADD PROVIDER
+//        $form1->addElement($submit);
+
+//        {form name='settings'}
+//        <table class="ow_table_1 ow_form ow_automargin">
+//            <tr class="ow_alt1">
+//                <td class="ow_value">POLYMER WEBCOMPONENT</td>
+//                <td class="ow_value">{input name='components_url'}</td>
+//            </tr>
+//            <tr>
+//                <td colspan="2" class="ow_center">{submit name='updateSettings' class='ow_button ow_ic_save'}</td>
+//            </tr>
+//        </table>
+//        {/form}
