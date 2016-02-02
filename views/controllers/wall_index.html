@@ -85,6 +85,7 @@
                 <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
                 <{$latestDatalet['component']}
                 data-url="{$latestDatalet['params']['data-url']}"
+                {if !empty($latestDatalet['params']['url'])} url="{$latestDatalet['params']['url']}" {/if}
                 fields='[{$latestDatalet['fields']}]'>
                 </{$latestDatalet['component']}>
         {/if}
