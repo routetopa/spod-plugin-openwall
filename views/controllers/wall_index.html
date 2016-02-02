@@ -19,8 +19,9 @@
 
     div.datalet {
         width: 50%;
+        height: 100%;
         overflow: hidden;
-        color: #FFFFFF;;
+        /*color: #FFFFFF;*/
     }
 
     div.explorer {
@@ -86,6 +87,8 @@
                 <{$latestDatalet['component']}
                 data-url="{$latestDatalet['params']['data-url']}"
                 {if !empty($latestDatalet['params']['url'])} url="{$latestDatalet['params']['url']}" {/if}
+                title="{$latestDatalet['params']['title']}"
+                description="{$latestDatalet['params']['description']}"
                 fields='[{$latestDatalet['fields']}]'>
                 </{$latestDatalet['component']}>
         {/if}
