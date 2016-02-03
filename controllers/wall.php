@@ -43,14 +43,18 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
         $dbo = OW::getDbo();
 
-        $query = "SELECT * FROM ow_ode_datalet where id = (select max(dataletId) from ow_ode_datalet_post);";
+        $query = "SELECT ow_ode_datalet.component, ow_ode_datalet.params, ow_ode_datalet.fields
+                  FROM ow_ode_datalet join ow_ode_datalet_post on ow_ode_datalet.id = ow_ode_datalet_post.dataletId
+                  WHERE ow_ode_datalet.component != 'preview-datalet'
+                  ORDER BY ow_ode_datalet.id desc
+                  LIMIT 1;";
 
         $row = $dbo->queryForRow($query);
 
         $data = [
             'component' => $row["component"],
             'params' => json_decode($row["params"], true),
-            'fields' => $row["fields"]
+            'fields' => str_replace("'","&#39;", $row["fields"])
         ];
 
         $this->assign('latestDatalet', $data);
