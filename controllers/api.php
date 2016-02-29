@@ -102,7 +102,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $providersdata[$p->id] = $p;
 
             // Try CKAN
-            $ch = curl_init($p->api_url . "/api/3/action/package_search");
+            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=1000");//1000 limit!
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
