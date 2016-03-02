@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
     <name>SPOD Open wall</name>
-    <key>spod_plugin_open_wall</key>
+    <key>openwall</key>
     <description>Route to PA's Open wall</description>
     <author>ISISLab</author>
     <authorEmail>isislab@routetopa.eu</authorEmail>
