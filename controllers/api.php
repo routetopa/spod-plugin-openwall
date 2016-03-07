@@ -102,12 +102,12 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $providersdata[$p->id] = $p;
 
             // Try CKAN
-            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=1000");//1000 limit!
+            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=50");//1000 limit!
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+//            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
             $res = curl_exec($ch);
             $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
@@ -118,12 +118,12 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             }
 
             // Try ODS
-            $ch = curl_init($p->api_url . "/api/datasets/1.0/search/");
+            $ch = curl_init($p->api_url . "/api/datasets/1.0/search/?rows=-1");
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+//            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
             $res = curl_exec($ch);
             $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
