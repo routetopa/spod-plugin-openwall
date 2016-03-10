@@ -96,6 +96,7 @@ class OPENWALL_CTRL_Admin extends ADMIN_CTRL_Abstract
         }
         $this->assign('providers', $providersList);
         $this->assign('deleteUrls', $deleteUrls);
+        $this->assign('createDatasetCache', OW::getRouter()->urlFor(__CLASS__, 'createDatasetCache'));
     }
 
     public function delete( $params )
@@ -104,6 +105,13 @@ class OPENWALL_CTRL_Admin extends ADMIN_CTRL_Abstract
         {
             OPENWALL_BOL_Service::getInstance()->deleteProvider((int) $params['id']);
         }
+        $this->redirect(OW::getRouter()->urlForRoute('openwall.admin'));
+    }
+
+    public function createDatasetCache()
+    {
+        $service = new OPENWALL_CTRL_Api();
+        ODE_BOL_Service::getInstance()->saveSetting('openwall_dataset_list', $service->datasetTreeBuilder());
         $this->redirect(OW::getRouter()->urlForRoute('openwall.admin'));
     }
 }

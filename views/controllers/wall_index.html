@@ -105,19 +105,16 @@
 
     {text key='openwall+explore_datasets_instructions'}
     <ul>
-        <li><a href="http://srvgal100.deri.ie:8081/" target="_blank">TET v.0.1 @ Galway (Ireland)</a></li>
-        <li><a href="http://ckan.routetopa.eu/" target="_blank">Example CKAN with data from out pilots (Prato, Groiningen, Den Haag)</a></li>
-        <li><a href="https://data.gov.uk/" target="_blank">data.gov.uk (UK)</a></li>
-        <li><a href="http://data.issy.com/page/home/" target="_blank">data.issy.com (from OpenDataSoft, France)</a></li>
-        <li><a href="https://data.overheid.nl/" target="_blank">Dataportaal van de Nederlandse overheid (Netherland)</a></li>
-        <li><a href="https://dati.lazio.it/" target="_blank">Open data Regione Lazio (Italy)</a></li>
-        <li><a href="https://data.gov.ie/" target="_blank">Ireland's Open Data Portal (Ireland)</a></li>
-        <li><a href="http://www.iledefrance.fr/" target="_blank">French Open Data Portal (France)</a></li>
+    {foreach $providers as $provider}
+        <li><a href="{$provider->api_url}" target="_blank">{$provider->title}</a></li>
+    {/foreach}
     </ul>
+
 </div>
 
 <link rel="import" href="{$components_url}datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
 <datasetexplorer-datalet
+        data='{$datasetCache}'
         data-url="openwall/api/datasetTree"
         fields='["result,datasets,provider_name", "result,datasets,organization_name",
                     "result,datasets,package_name", "result,datasets,resource_name", "result,datasets,url", "result,datasets,w"]'>

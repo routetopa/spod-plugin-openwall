@@ -43,7 +43,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         for ($i = 0; $i < $datasetsCnt; $i++) {
             $ds = $datasets[$i];
 
-            $treemapdata[] = array(
+            @$treemapdata[] = array(
                 'provider_name' => 'p:' . $p->id,
                 'organization_name' => $ds['metas']['publisher'],
                 'package_name' => $ds['metas']['title'],
@@ -55,7 +55,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         return $treemapdata;
     }
 
-    public function datasetTree()
+    public function datasetTreeBuilder()
     {
         $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
 
@@ -102,7 +102,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $providersdata[$p->id] = $p;
 
             // Try CKAN
-            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=50");//1000 limit!
+            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=1000");//1000 limit!
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -134,9 +134,14 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             }
         }
 
+        return json_encode( array( 'result' => array( 'providers' => $providersdata, 'datasets' => $treemapdata )));
+    }
+
+    public function datasetTree()
+    {
         header('content-type: application/json');
         header("Access-Control-Allow-Origin: *");
-        echo json_encode( array( 'result' => array( 'providers' => $providersdata, 'datasets' => $treemapdata )));
+        echo $this->datasetTreeBuilder();
         die();
     }
 
