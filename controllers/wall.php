@@ -101,7 +101,9 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->setDocumentKey('openwall_index_page');
 
         $this->assign("staticResourcesUrl", OW::getPluginManager()->getPlugin("openwall")->getStaticUrl());
-        $this->assign("datasetCache", str_replace("'", "",ODE_BOL_Service::getInstance()->getSettingByKey('openwall_dataset_list')->value));
+
+        $cache = (ODE_BOL_Service::getInstance()->getSettingByKey('openwall_dataset_list') != null) ? ODE_BOL_Service::getInstance()->getSettingByKey('openwall_dataset_list')->value : "";
+        $this->assign("datasetCache", str_replace("'", "", $cache));
 
         $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
         $this->assign('providers', $providers);

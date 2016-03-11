@@ -57,64 +57,51 @@ class OPENWALL_CTRL_Api extends OW_ActionController
 
     public function datasetTreeBuilder()
     {
-        $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
-
-        /*
-        $providers = null;
-        $hostname = gethostname();
-        switch ($hostname) {
-            case 'prato.routetopa.eu';
-                $providers = [
-                    'http://dati.lazio.it/catalog' ];
-                break;
-            case 'issy.routetopa.eu';
-                $providers = [
-                    'https://data.issy.com',
-                    'http://data.iledefrance.fr' ];
-                break;
-            case 'dublin.routetopa.eu';
-                $providers = [
-                    'https://data.gov.ie' ];
-                break;
-            case 'denhaag.routetopa.eu';
-            case 'groningen.routetopa.eu';
-                $providers = [
-                    'https://data.overheid.nl/data' ];
-                break;
-            default:
-                $providers = [
-                    'https://data.issy.com',
-                    'http://dati.lazio.it/catalog',
-                    'https://data.gov.uk',
-                    'https://data.overheid.nl/data',
-                    'http://data.iledefrance.fr',
-                    'https://data.gov.ie' ];
-                break;
-        }
-        $providers[] = 'http://ckan.routetopa.eu';
-        $providers[] = 'http://vmdatagov01.deri.ie:8080';
-        */
-
         $providersdata = [];
         $treemapdata = [];
+        $step = 50;
+        $start;
+        $maxDatasetPerProvider = isset($_REQUEST['maxDataset']) ? $_REQUEST['maxDataset'] : 1; //500
+
+        $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
+
         foreach ($providers as $p) {
+
             // Build providers info
+            $providerDatasetCounter = 0;
+            $start = 0;
             $providersdata[$p->id] = $p;
 
             // Try CKAN
-            $ch = curl_init($p->api_url . "/api/3/action/package_search?rows=1000");//1000 limit!
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            while($providerDatasetCounter < $maxDatasetPerProvider) {
+                $ch = curl_init($p->api_url . "/api/3/action/package_search?start=" . $start . "&rows=" . $step);//1000 limit!
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 //            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-            $res = curl_exec($ch);
-            $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-            if (200 == $retcode) {
-                $data = json_decode( $res, true );
-                $treemapdata = array_merge($treemapdata,  $this->buildCkanTree($p, $data));
-                continue;
+                $res = curl_exec($ch);
+                $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+                if (200 == $retcode)
+                {
+                    $data = json_decode($res, true);
+
+                    if(count($data["result"]["results"]))
+                    {
+                        $treemapdata = array_merge($treemapdata, $this->buildCkanTree($p, $data));
+                        $start += $step;
+                        $providerDatasetCounter += count($data["result"]["results"]);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
 
             // Try ODS

@@ -1,3 +1,16 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#create_cache_link").click(function(event) {
+
+            $(event.currentTarget).attr('href', $(event.currentTarget).attr('href') +
+                                                  "?maxDataset=" +
+                                                  $("#max_dataset_value").val());
+        });
+    });
+
+</script>
+
 <style>
     .ow_ic_delete {
         width:16px;
@@ -54,7 +67,8 @@
     {/foreach}
     <tr>
         <td colspan="5">
-            <a href="{$createDatasetCache}">Create cache</a>
+            <input type="text" value="500" maxlength="3" id="max_dataset_value" style="width: 50px" />
+            <a id="create_cache_link" href="{$createDatasetCache}">Create cache</a>
         </td>
     </tr>
 </table>
