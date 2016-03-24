@@ -96,6 +96,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
     {
         OW::getLanguage()->addKeyForJs('openwall', 'admin_title');
 
+        /* TODO Uncomment follow line when new theme is installed */
         //OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate('general_no_header_pic'));
 
         $this->setPageTitle(OW::getLanguage()->text('openwall', 'index_page_title'));
