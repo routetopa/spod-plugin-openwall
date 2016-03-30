@@ -42,19 +42,26 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
     function getLatestDatalets($count = 0) {
 
         $dbo = OW::getDbo();
+        $params = null;
+        $paramsStr = "";
 
         $query = "SELECT ow_ode_datalet.component, ow_ode_datalet.params, ow_ode_datalet.fields
                   FROM ow_ode_datalet join ow_ode_datalet_post on ow_ode_datalet.id = ow_ode_datalet_post.dataletId
                   WHERE ow_ode_datalet.component != 'preview-datalet'
                   ORDER BY ow_ode_datalet.id desc
-                  LIMIT 1;";
+                  LIMIT ".$count.";";
 
         $row = $dbo->queryForRow($query);
+
+        $params = json_decode($row['params']);
+        foreach ($params as $key => $value)
+            $paramsStr .= $key. "='" . $value . "' ";
 
         $data = [
             'component' => $row["component"],
             'params' => json_decode($row["params"], true),
-            'fields' => str_replace("'","&#39;", $row["fields"])
+            'fields' => str_replace("'","&#39;", $row["fields"]),
+            'parameters' => $paramsStr
         ];
 
         $this->assign('latestDatalet', $data);
@@ -97,7 +104,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         OW::getLanguage()->addKeyForJs('openwall', 'admin_title');
 
         /* TODO Uncomment follow line when new theme is installed */
-        //OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate('general_no_header_pic'));
+        OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate('general_header_pic'));
 
         $this->setPageTitle(OW::getLanguage()->text('openwall', 'index_page_title'));
         $this->setPageHeading(OW::getLanguage()->text('openwall', 'index_page_heading'));

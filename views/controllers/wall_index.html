@@ -89,7 +89,8 @@
                 {if !empty($latestDatalet['params']['url'])} url="{$latestDatalet['params']['url']}" {/if}
                 title="{$latestDatalet['params']['title']}"
                 description="{$latestDatalet['params']['description']}"
-                fields='[{$latestDatalet['fields']}]'>
+                fields='[{$latestDatalet['fields']}]'
+                {$latestDatalet['parameters']}>
                 </{$latestDatalet['component']}>
         {/if}
 
