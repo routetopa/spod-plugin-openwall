@@ -45,7 +45,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $params = null;
         $paramsStr = "";
 
-        $query = "SELECT ow_ode_datalet.component, ow_ode_datalet.params, ow_ode_datalet.fields
+        $query = "SELECT ow_ode_datalet.component, ow_ode_datalet.params, ow_ode_datalet.fields, ow_ode_datalet.data
                   FROM ow_ode_datalet join ow_ode_datalet_post on ow_ode_datalet.id = ow_ode_datalet_post.dataletId
                   WHERE ow_ode_datalet.component != 'preview-datalet'
                   ORDER BY ow_ode_datalet.id desc
@@ -59,6 +59,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
         $data = [
             'component' => $row["component"],
+            'data' => $row["data"],
             'params' => json_decode($row["params"], true),
             'fields' => str_replace("'","&#39;", $row["fields"]),
             'parameters' => $paramsStr
