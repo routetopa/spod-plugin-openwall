@@ -85,12 +85,8 @@
         {if !empty($latestDatalet)}
                 <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
                 <{$latestDatalet['component']}
-                data-url="{$latestDatalet['params']['data-url']}"
-                {if !empty($latestDatalet['params']['url'])} url="{$latestDatalet['params']['url']}" {/if}
-                title="{$latestDatalet['params']['title']}"
-                description="{$latestDatalet['params']['description']}"
-                fields='[{$latestDatalet['fields']}]'
-                {$latestDatalet['parameters']}>
+                    fields='[{$latestDatalet['fields']}]'
+                    {$latestDatalet['parameters']}>
                 </{$latestDatalet['component']}>
         {/if}
 
