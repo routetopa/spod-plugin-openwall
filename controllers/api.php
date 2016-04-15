@@ -10,8 +10,12 @@ class OPENWALL_CTRL_Api extends OW_ActionController
         $this->setDocumentKey('openwall_index_page');
     }
 
+    protected function sanitizeInput($str)
+    {
+        return str_replace("'", "&#39;", !empty($str) ? $str : "");
+    }
+
     private function buildCkanTree($p, $data) {
-        //$lintHost = parse_url($p, PHP_URL_HOST);
         $treemapdata = array();
         $datasets = $data['result']['results'];
         $datasetsCnt = count( $datasets );
@@ -21,15 +25,21 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $resourcesCnt = count( $resources );
             for ($j = 0; $j < $resourcesCnt; $j++) {
                 $r = $resources[$j];
+
                 $treemapdata[] = array(
-                    //'provider_name' => parse_url($p, PHP_URL_HOST),
-                    'provider_name' => 'p:' . $p->id,
-                    'resource_name' => array_key_exists('name', $r) ? $r['name'] : $r['description'],
-                    'package_name' => $ds['title'],
-                    'organization_name' => array_key_exists('organization', $ds) ? $ds['organization']['title'] : '',
+                    'w' => 1,
+                    'provider_name' => $this->sanitizeInput('p:' . $p->id),
+                    'organization_name' => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
+                    'package_name' => $this->sanitizeInput($ds['title']),
+                    'resource_name' => $this->sanitizeInput(array_key_exists('name', $r) ? $r['name'] : $r['description']),
                     'url' => $r['url'],
-                    //'url' => str_replace(parse_url($r['url'], PHP_URL_HOST), $lintHost, $r['url']),
-                    'w' => 1
+                    'metas' => json_encode(["organization" => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
+                        "name" => $this->sanitizeInput($r->name),
+                        "description" => $this->sanitizeInput($r->description),
+                        "format" => $this->sanitizeInput($r->format),
+                        "created" => $this->sanitizeInput($r->created),
+                        "last_modified" => $this->sanitizeInput($r->last_modified)
+                    ])
                 );
             }
         }
@@ -44,12 +54,13 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             $ds = $datasets[$i];
 
             @$treemapdata[] = array(
-                'provider_name' => 'p:' . $p->id,
-                'organization_name' => $ds['metas']['publisher'],
-                'package_name' => $ds['metas']['title'],
-                'resource_name' => 'Click to open', //array_key_exists('name', $r) ? $r['name'] : $r['description'],
+                'w' => 1,
+                'provider_name' => $this->sanitizeInput('p:' . $p->id),
+                'organization_name' => $this->sanitizeInput($ds['metas']['publisher']),
+                'package_name' => $this->sanitizeInput($ds['metas']['title']),
+                'resource_name' => $this->sanitizeInput($ds['metas']['title']),
                 'url' => $p->api_url . '/explore/dataset/' . $ds['datasetid'],
-                'w' => 1
+                'metas' => $this->sanitizeInput(json_encode($ds['metas']))
             );
         }
         return $treemapdata;
@@ -59,8 +70,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     {
         $providersdata = [];
         $treemapdata = [];
-        $step = 50;
-        $start;
+        $step = 5;
         $maxDatasetPerProvider = isset($_REQUEST['maxDataset']) ? $_REQUEST['maxDataset'] : 1; //500
 
         $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
@@ -143,3 +153,4 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     }
 
 }
+
