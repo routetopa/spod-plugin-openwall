@@ -83,14 +83,14 @@
     <div class="datalet">
 
         {if !empty($latestDatalet)}
-                <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
-                <{$latestDatalet['component']}
-                    fields='[{$latestDatalet['fields']}]'
-                    {$latestDatalet['parameters']}>
-                </{$latestDatalet['component']}>
-        {/if}
+        <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
+        <{$latestDatalet['component']}
+            fields='[{$latestDatalet['fields']}]'
+            {$latestDatalet['parameters']}>
+        </{$latestDatalet['component']}>
+    {/if}
 
-    </div>
+</div>
 </div>
 
 <div class="explorer">
@@ -102,9 +102,9 @@
 
     {text key='openwall+explore_datasets_instructions'}
     <ul>
-    {foreach $providers as $provider}
+        {foreach $providers as $provider}
         <li><a href="{$provider->api_url}" target="_blank">{$provider->title}</a></li>
-    {/foreach}
+        {/foreach}
     </ul>
 
 </div>
