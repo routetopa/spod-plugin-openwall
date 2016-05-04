@@ -16,6 +16,8 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     }
 
     private function buildCkanTree($p, $data) {
+        $filter = array("id", "creator_user_id", "license_id", "owner_org", "revision_id");
+
         $treemapdata = array();
         $datasets = $data['result']['results'];
         $datasetsCnt = count( $datasets );
@@ -26,6 +28,25 @@ class OPENWALL_CTRL_Api extends OW_ActionController
             for ($j = 0; $j < $resourcesCnt; $j++) {
                 $r = $resources[$j];
 
+                $metas = [
+                    "name" => $r['name'],
+                    "description" => $r['description'],
+                    "format" => $r['format'],
+                    "created" => $r['created']
+                ];
+
+                if($r['last_modified'] != null)
+                    $metas['last_modified'] = $r['last_modified'];
+
+                $metas['organization'] = array_key_exists('organization', $ds) ? $ds['organization']['title'] : '';
+
+
+                foreach ($ds as $key => $value) {
+                    if(!in_array($key, $filter) and gettype($value) == "string" and $value != null and $value != "")
+                        if(!$metas[$key])
+                            $metas[$key] = $value;
+                }
+
                 $treemapdata[] = array(
                     'w' => 1,
                     'provider_name' => $this->sanitizeInput('p:' . $p->id),
@@ -33,13 +54,14 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                     'package_name' => $this->sanitizeInput($ds['title']),
                     'resource_name' => $this->sanitizeInput(array_key_exists('name', $r) ? $r['name'] : $r['description']),
                     'url' => $r['url'],
-                    'metas' => json_encode(["organization" => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
-                        "name" => $this->sanitizeInput($r->name),
-                        "description" => $this->sanitizeInput($r->description),
-                        "format" => $this->sanitizeInput($r->format),
-                        "created" => $this->sanitizeInput($r->created),
-                        "last_modified" => $this->sanitizeInput($r->last_modified)
-                    ])
+//                    'metas' => json_encode(["organization" => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
+//                        "name" => $this->sanitizeInput($r->name),
+//                        "description" => $this->sanitizeInput($r->description),
+//                        "format" => $this->sanitizeInput($r->format),
+//                        "created" => $this->sanitizeInput($r->created),
+//                        "last_modified" => $this->sanitizeInput($r->last_modified)
+//                    ])
+                    'metas' => $this->sanitizeInput(json_encode($metas))
                 );
             }
         }
