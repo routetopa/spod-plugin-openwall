@@ -29,7 +29,8 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                 $r = $resources[$j];
 
                 $metas = [
-                    "name" => $r['name'],
+//                    "name" => $r['name'],
+                    "organization" => array_key_exists('organization', $ds) ? $ds['organization']['title'] : 'none',
                     "description" => $r['description'],
                     "format" => $r['format'],
                     "created" => $r['created']
@@ -38,8 +39,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                 if($r['last_modified'] != null)
                     $metas['last_modified'] = $r['last_modified'];
 
-                $metas['organization'] = array_key_exists('organization', $ds) ? $ds['organization']['title'] : '';
-
+//                $metas['organization'] = array_key_exists('organization', $ds) ? $ds['organization']['title'] : '';
 
                 foreach ($ds as $key => $value) {
                     if(!in_array($key, $filter) and gettype($value) == "string" and $value != null and $value != "")
