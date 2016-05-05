@@ -92,7 +92,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     {
         $providersdata = [];
         $treemapdata = [];
-        $step = 5;
+        $step = 1;
         $maxDatasetPerProvider = isset($_REQUEST['maxDataset']) ? $_REQUEST['maxDataset'] : 1; //500
 
         $providers = OPENWALL_BOL_Service::getInstance()->getProviderList();
