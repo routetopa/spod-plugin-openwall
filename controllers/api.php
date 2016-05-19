@@ -16,7 +16,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
     }
 
     private function buildCkanTree($p, $data) {
-        $filter = array("id", "creator_user_id", "license_id", "owner_org", "revision_id");
+        $filter = array("id", "creator_user_id", "license_id", "owner_org", "revision_id", "notes");//notes
 
         $treemapdata = array();
         $datasets = $data['result']['results'];
@@ -44,7 +44,7 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                 foreach ($ds as $key => $value) {
                     if(!in_array($key, $filter) and gettype($value) == "string" and $value != null and $value != "")
                         if(!$metas[$key])
-                            $metas[$key] = $value;
+                            $metas[$this->sanitizeInput($key)] = $this->sanitizeInput($value);
                 }
 
                 $treemapdata[] = array(
@@ -53,15 +53,10 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                     'organization_name' => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
                     'package_name' => $this->sanitizeInput($ds['title']),
                     'resource_name' => $this->sanitizeInput(array_key_exists('name', $r) ? $r['name'] : $r['description']),
-                    'url' => $r['url'],
-//                    'metas' => json_encode(["organization" => $this->sanitizeInput(array_key_exists('organization', $ds) ? $ds['organization']['title'] : ''),
-//                        "name" => $this->sanitizeInput($r->name),
-//                        "description" => $this->sanitizeInput($r->description),
-//                        "format" => $this->sanitizeInput($r->format),
-//                        "created" => $this->sanitizeInput($r->created),
-//                        "last_modified" => $this->sanitizeInput($r->last_modified)
-//                    ])
+                    'url' => $p->api_url . '/api/action/datastore_search?resource_id=' . $r['id'],
+//                    'url' => $r['url'],
                     'metas' => $this->sanitizeInput(json_encode($metas))
+//                    'metas' => json_encode(["cos" => "foto"])
                 );
             }
         }
