@@ -54,9 +54,10 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                     'package_name' => $this->sanitizeInput($ds['title']),
                     'resource_name' => $this->sanitizeInput(array_key_exists('name', $r) ? $r['name'] : $r['description']),
                     'url' => $p->api_url . '/api/action/datastore_search?resource_id=' . $r['id'],
-//                    'url' => $r['url'],
+
+//                    'resource_url' => $r['url'],
+
                     'metas' => $this->sanitizeInput(json_encode($metas))
-//                    'metas' => json_encode(["cos" => "foto"])
                 );
             }
         }
@@ -76,7 +77,10 @@ class OPENWALL_CTRL_Api extends OW_ActionController
                 'organization_name' => $this->sanitizeInput($ds['metas']['publisher']),
                 'package_name' => $this->sanitizeInput($ds['metas']['title']),
                 'resource_name' => $this->sanitizeInput($ds['metas']['title']),
-                'url' => $p->api_url . '/explore/dataset/' . $ds['datasetid'],
+                'url' => $p->api_url . '/api/records/1.0/search?dataset=' . $ds['datasetid'],
+
+//                'resource_url' => $p->api_url . '/explore/dataset/' . $ds['datasetid'],
+
                 'metas' => $this->sanitizeInput(json_encode($ds['metas']))
             );
         }
