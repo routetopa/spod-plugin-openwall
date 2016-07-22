@@ -1,131 +1,71 @@
 <style>
-    div.split {
-        display: flex;
+    .cols {
         width: 100%;
-        margin-top: 1.5em;
     }
-
-    div.activities {
-        width: 50%;
-    }
-
-    div.activities p {
-        margin-bottom: 16px;
-    }
-
-    div.activities b {
-        color:#2196F3;
-    }
-
-    div.datalet {
-        width: 50%;
-        height: 100%;
-        overflow: hidden;
-        /*color: #FFFFFF;*/
-    }
-
-    div.explorer {
-        border-top: 2px solid #2196F3;
-        margin: 16px 0px 16px 0px;
-        padding-top: 16px;
-    }
-
-    div.explorer img {
+    .cols .col {
         float: left;
-        width: 100px;
     }
-
-    div.datasets_instructions {
-        margin-left: 116px;
-        height: 94px;
+    .cols-50-50 .col {
+        width: 45%;
+        margin-right: 5%;
     }
-
-    div.datasets_instructions h4 {
-        padding-top: 16px;
+    .cols .col:last-child {
+        margin-right: 5%;
     }
-
-    h4 {
-        margin: 0px 0px 16px 0px;
+    .openid_login th {
+        background-color: transparent;
+        text-align: left;
     }
-
-    div.explorer ul{
-        list-style-type: square;
-        padding-left: 32px;
+    .openid_login .form_commands {
+        padding-top: 1em;
+    }
+    .openid_login .password_reset {
+        display: inline-block;
+        margin-left: 1em;
     }
 </style>
 
+<div class="cols cols-50-50 clearfix">
+    <div class="col">
 
-{text key='openwall+front_description'}
-
-
-<div class="split">
-    <div class="activities">
-        <h4>{text key='openwall+activities'}</h4>
-
-        <p>
-            {text key='openwall+users_online'}
-            <b>{count($usersIds)}</b>.
+        <p style="line-height: 1.4em">
+        {text key='openwall+front_description'}
         </p>
 
-        {if !empty($latestPublicRooms)}
-        <p>
-            {text key='openwall+last_room'}
-            <a href="public-room/#!/{$latestPublicRooms.0->id}">{$latestPublicRooms.0->subject}</a>.
-        </p>
-        {/if}
-
-        <h4>{text key='openwall+meet_datalet'}</h4>
-
-        <p>
-            {text key='openwall+datalet_description'}
-        </p>
     </div>
-    <div class="datalet">
+    <div class="col">
 
-        {if !empty($latestDatalet)}
-        <link rel="import" href="{$components_url}datalets/{$latestDatalet['component']}/{$latestDatalet['component']}.html" />
-        <{$latestDatalet['component']}
-            fields='[{$latestDatalet['fields']}]'
-            {$latestDatalet['parameters']}
-            export_menu="0">
-        </{$latestDatalet['component']}>
-    {/if}
+        <h4>{text key='openwall+login'}</h4>
 
-</div>
-</div>
+        <form method="post" action="{$url_openid_login}" class="openid_login">
+            <input type="hidden" name="redirect_success" value="{$url_redirect_success}">
+            <input type="hidden" name="redirect_failure" value="{$url_redirect_failure}">
+            <table>
+                <tr>
+                    <th><label for="openid_url">E-mail:</label></th>
+                    <td><input type="text" name="openid_url" value="" id="openid_url" /></td>
+                </tr>
+                <tr>
+                    <th><label for="openid_pass">Password:</label></th>
+                    <td><input type="password" name="openid_pass" value="" id="openid_pass" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="form_commands">
+                        <span class="ow_button">
+                            <span class="ow_positive">
+                                <input type="submit" value="Sign in" class="ow_positive" />
+                            </span>
+                        </span>
+                        <span class="ow_button">
+                            <span class="ow_positive">
+                                <input type="submit" name="cancel" value="Cancel" class="ow_positive ow_ic_close" />
+                            </span>
+                        </span>
+                        <a class="password_reset" href="{$url_password_reset}">I forgot my password</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
 
-<div class="explorer">
-
-    <img src="ow_static/plugins/openwall/images/explore.png">
-    <div class="datasets_instructions">
-        <h4>{text key='openwall+explore_datasets_heading'}</h4>
     </div>
-
-    {text key='openwall+explore_datasets_instructions'}
-    <ul>
-        {foreach $providers as $provider}
-        <li><a href="{$provider->api_url}" target="_blank">{$provider->title}</a></li>
-        {/foreach}
-    </ul>
-
 </div>
-
-<link rel="import" href="{$components_url}datalets/datasetexplorer-datalet/datasetexplorer-datalet.html" />
-<datasetexplorer-datalet
-        data='{$datasetCache}'
-        data-url="openwall/api/datasetTree"
-        fields='["result,datasets,provider_name",
-                 "result,datasets,organization_name",
-                 "result,datasets,package_name",
-                 "result,datasets,resource_name",
-                 "result,datasets,url",
-                 "result,datasets,w",
-                 "result,datasets,metas"
-                ]'>
-</datasetexplorer-datalet>
-
-<script>
-    $(function () {
-        $(window).resize();
-    });
-</script>

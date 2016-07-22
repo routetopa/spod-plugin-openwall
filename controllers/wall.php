@@ -100,7 +100,37 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->assign('onlineUsersCount', $onlineUsersCount);
     }
 
-    public function index()
+    public function index() {
+        $router = OW_Router::getInstance();
+        $base_url = $router->getBaseUrl();
+
+        // If the user is logged in, redirect to "What's new"
+        if (OW_Auth::getInstance()->isAuthenticated()) {
+            $uri = $router->getRoute('base_index')->generateUri();
+            return $this->redirect( $uri );
+        }
+
+        // Page title is shown on tabs
+        $this->setPageTitle(OW::getLanguage()->text('openwall', 'index_page_title'));
+
+        // Page header is rendered on top of the page
+        //$this->setPageHeading(OW::getLanguage()->text('openwall', 'index_page_heading'));
+
+        $this->setDocumentKey('openwall_index_page');
+
+        $this->assign("url_password_reset", "{$base_url}openid/index.php/password_reset");
+        $this->assign("url_redirect_success", $base_url . $router->getRoute('openidconnect_login')->generateUri());
+        $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
+        $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
+
+        // Gather information about the status of the system ans assign it to template vars
+        $this->getLatestDatalets(1);
+        $this->getLatestPrivateRooms(1);
+        $this->getOnlineUsers();
+    }
+
+    // This is the old "Open Wall"
+    public function index_old()
     {
         OW::getLanguage()->addKeyForJs('openwall', 'admin_title');
 
