@@ -101,6 +101,8 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
     }
 
     public function index() {
+        OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate('general_header_pic'));
+
         $router = OW_Router::getInstance();
         $base_url = $router->getBaseUrl();
 
