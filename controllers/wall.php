@@ -53,6 +53,11 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
         $row = $dbo->queryForRow($query);
 
+        if (!$row || count($row)==0) {
+            $this->assign('latestDatalet', null);
+            return;
+        }
+
         $params = json_decode($row['params']);
         foreach ($params as $key => $value)
             $paramsStr .= $key. "='" . $value . "' ";
