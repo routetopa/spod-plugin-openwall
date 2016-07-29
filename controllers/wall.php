@@ -129,6 +129,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->assign("url_redirect_success", $base_url . $router->getRoute('openidconnect_login')->generateUri());
         $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
         $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
+        $this->assign("url_openid_signup", "{$base_url}openid/index.php/signin");
 
         // Gather information about the status of the system ans assign it to template vars
         $this->getLatestDatalets(1);
