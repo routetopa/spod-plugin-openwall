@@ -126,10 +126,16 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->setDocumentKey('openwall_index_page');
 
         $this->assign("url_password_reset", "{$base_url}openid/index.php/password_reset");
-        $this->assign("url_redirect_success", $base_url . $router->getRoute('openidconnect_login')->generateUri());
-        $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
-        $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
-        $this->assign("url_openid_signup", "{$base_url}openid/index.php/signin");
+
+        if ($plugin_oic = $router->getRoute('openidconnect_login')) {
+            $this->assign("openid_enabled", "enabled");
+            $this->assign("url_redirect_success", $base_url . $plugin_oic->generateUri());
+            $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
+            $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
+            $this->assign("url_openid_signup", "{$base_url}openid/index.php/signin");
+        } else {
+            $this->assign("openid_enabled", "disabled");
+        }
 
         // Gather information about the status of the system ans assign it to template vars
         $this->getLatestDatalets(1);

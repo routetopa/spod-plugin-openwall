@@ -34,7 +34,7 @@
 
     </div>
     <div class="col">
-
+{if $openid_enabled=="enabled"}
         <h4>{text key='openidconnect+login'}</h4>
 
         <form method="post" action="{$url_openid_login}" class="openid_login">
@@ -65,6 +65,6 @@
                 </tr>
             </table>
         </form>
-
+{/if}
     </div>
 </div>
