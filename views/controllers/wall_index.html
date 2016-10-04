@@ -35,18 +35,18 @@
     </div>
     <div class="col">
 {if $openid_enabled=="enabled"}
-        <h4>{text key='openidconnect+login'}</h4>
+        <h4>{text key='openwall+oid_login'}</h4>
 
         <form method="post" action="{$url_openid_login}" class="openid_login">
             <input type="hidden" name="redirect_success" value="{$url_redirect_success}">
             <input type="hidden" name="redirect_failure" value="{$url_redirect_failure}">
             <table>
                 <tr>
-                    <th><label for="openid_url">E-mail:</label></th>
+                    <th><label for="openid_url">{text key='openwall+oid_email'}:</label></th>
                     <td><input type="text" name="openid_url" value="" id="openid_url" /></td>
                 </tr>
                 <tr>
-                    <th><label for="openid_pass">Password:</label></th>
+                    <th><label for="openid_pass">{text key='openwall+oid_password'}:</label></th>
                     <td><input type="password" name="openid_pass" value="" id="openid_pass" /></td>
                 </tr>
                 <tr>
@@ -54,13 +54,13 @@
                         <p>
                         <span class="ow_button">
                             <span class="ow_positive">
-                                <input type="submit" value="Sign in" class="ow_positive" />
+                                <input type="submit" value="{text key='openwall+oid_submit'}" class="ow_positive" />
                             </span>
                         </span>
                         </p>
-                        <p><a class="" href="{$url_password_reset}">I forgot my password</a>
+                        <p><a class="" href="{$url_password_reset}">{text key='openwall+oid_forgot'}</a>
                             &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-                        <a class="" href="{$url_openid_signup}">New user? Register here</a></p>
+                        <a class="" href="{$url_openid_signup}">{text key='openwall+oid_register'}</a></p>
                     </td>
                 </tr>
             </table>
