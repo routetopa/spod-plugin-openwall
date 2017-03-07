@@ -139,7 +139,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
         // Gather information about the status of the system ans assign it to template vars
         $this->getLatestDatalets(1);
-        $this->getLatestPrivateRooms(1);
+//        $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
     }
 
@@ -164,7 +164,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->assign('providers', $providers);
 
         $this->getLatestDatalets(1);
-        $this->getLatestPrivateRooms(1);
+//        $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
     }
 
