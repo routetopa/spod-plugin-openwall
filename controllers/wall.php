@@ -137,7 +137,14 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
             $this->assign("openid_enabled", "disabled");
         }
 
-        // Gather information about the status of the system ans assign it to template vars
+        // Check if Facebook plugin is active
+        if ( OW::getPluginManager()->isPluginActive("fbconnect") ) {
+            $this->assign("fbconnect_enabled", "enabled");
+        } else {
+            $this->assign("fbconnect_enabled", "disabled");
+        }
+
+            // Gather information about the status of the system ans assign it to template vars
         $this->getLatestDatalets(1);
         $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
