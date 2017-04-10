@@ -133,6 +133,16 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
             $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
             $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
             $this->assign("url_openid_signup", "{$base_url}openid/index.php/signin");
+
+            $providerPreferences = BOL_PreferenceService::getInstance()->findPreference('openidconnect_provider_url');
+            if (!empty($providerPreferences)) {
+                $oid_base_url = $providerPreferences->defaultValue;
+                $this->assign("url_password_reset", "{$oid_base_url}/password_reset");
+                $this->assign("url_redirect_failure", "{$oid_base_url}/password_reset");
+                $this->assign("url_openid_login", "{$oid_base_url}/login");
+                $this->assign("url_openid_signup", "{$oid_base_url}/signin");
+            }
+
         } else {
             $this->assign("openid_enabled", "disabled");
         }
@@ -146,7 +156,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
             // Gather information about the status of the system ans assign it to template vars
         $this->getLatestDatalets(1);
-        $this->getLatestPrivateRooms(1);
+//        $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
     }
 
@@ -171,7 +181,7 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
         $this->assign('providers', $providers);
 
         $this->getLatestDatalets(1);
-        $this->getLatestPrivateRooms(1);
+//        $this->getLatestPrivateRooms(1);
         $this->getOnlineUsers();
     }
 
