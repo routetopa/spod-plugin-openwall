@@ -34,20 +34,20 @@
 
     </div>
     <div class="col">
-{if $openid_enabled=="enabled"}
+{if $oauth2_enabled=="enabled"}
         <h4>{text key='openwall+oid_login'}</h4>
 
-        <form method="post" action="{$url_openid_login}" class="openid_login">
+        <form method="post" action="{$url_oauth2_login}" class="openid_login">
             <input type="hidden" name="redirect_success" value="{$url_redirect_success}">
             <input type="hidden" name="redirect_failure" value="{$url_redirect_failure}">
             <table>
                 <tr>
-                    <th><label for="openid_url">{text key='openwall+oid_email'}:</label></th>
-                    <td><input type="text" name="openid_url" value="" id="openid_url" /></td>
+                    <th><label for="email">{text key='openwall+oid_email'}:</label></th>
+                    <td><input type="text" name="email" value="" id="email" /></td>
                 </tr>
                 <tr>
-                    <th><label for="openid_pass">{text key='openwall+oid_password'}:</label></th>
-                    <td><input type="password" name="openid_pass" value="" id="openid_pass" /></td>
+                    <th><label for="password">{text key='openwall+oid_password'}:</label></th>
+                    <td><input type="password" name="password" value="" id="password" /></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="form_commands">
@@ -58,14 +58,18 @@
                             </span>
                         </span>
                             {if $fbconnect_enabled=="enabled"}
-                                <a class="fb_button fb_button_medium" onclick="OW_FB.login(); return false;">
-                                    <span class="fb_connect_wrap"><span class="fb_button_text">{text key="fbconnect+connect_btn_label"}</span></span>
+                                <a class="fb_button fb_button_medium" href="{$url_oauth2_fb}">
+                                    <span class="fb_connect_wrap">
+                                        <span class="fb_button_text">
+                                            {text key="fbconnect+connect_btn_label"}
+                                        </span>
+                                    </span>
                                 </a>
                             {/if}
                         </p>
                         <p><a class="" href="{$url_password_reset}">{text key='openwall+oid_forgot'}</a>
                             &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-                        <a class="" href="{$url_openid_signup}">{text key='openwall+oid_register'}</a></p>
+                        <a class="" href="{$url_oauth2_register}">{text key='openwall+oid_register'}</a></p>
                     </td>
                 </tr>
             </table>

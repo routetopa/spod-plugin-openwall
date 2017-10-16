@@ -125,26 +125,29 @@ class OPENWALL_CTRL_Wall extends OW_ActionController
 
         $this->setDocumentKey('openwall_index_page');
 
-        $this->assign("url_password_reset", "{$base_url}openid/index.php/password_reset");
+        $this->assign("url_password_reset", "{$base_url}/oauth2/password/reset");
 
-        if ($plugin_oic = $router->getRoute('openidconnect_login')) {
-            $this->assign("openid_enabled", "enabled");
-            $this->assign("url_redirect_success", $base_url . $plugin_oic->generateUri());
-            $this->assign("url_redirect_failure", "{$base_url}openid/index.php/password_reset");
-            $this->assign("url_openid_login", "{$base_url}openid/index.php/login");
-            $this->assign("url_openid_signup", "{$base_url}openid/index.php/signin");
+        if ($plugin_oic = $router->getRoute('spodoauth2connect_oauth')) {
+            $this->assign("oauth2_enabled", "enabled");
+            //$this->assign("url_redirect_success", $base_url . $plugin_oic->generateUri());
+            
+            $this->assign("url_redirect_success", $base_url . OW::getRouter()->uriForRoute('spodoauth2connect_begin'));
+            $this->assign("url_redirect_failure", "{$base_url}/oauth2/password/reset");
+            $this->assign("url_oauth2_login", "{$base_url}/oauth2/login/remote");
+            $this->assign("url_oauth2_register", "{$base_url}/oauth2/register");
+            $this->assign("url_oauth2_fb", "{$base_url}/oauth2/fb/login");
 
-            $providerPreferences = BOL_PreferenceService::getInstance()->findPreference('openidconnect_provider_url');
-            if (!empty($providerPreferences)) {
-                $oid_base_url = $providerPreferences->defaultValue;
-                $this->assign("url_password_reset", "{$oid_base_url}/password_reset");
-                $this->assign("url_redirect_failure", "{$oid_base_url}/password_reset");
-                $this->assign("url_openid_login", "{$oid_base_url}/login");
-                $this->assign("url_openid_signup", "{$oid_base_url}/signin");
+            $oid_base_url = BOL_ConfigService::getInstance()->findConfigValue('spodoauth2connect', 'base_url');
+            $oid_base_url = trim($oid_base_url, '/');
+            if ($oid_base_url) {
+                $this->assign("url_password_reset", "{$oid_base_url}/password/reset");
+                $this->assign("url_redirect_failure", "{$oid_base_url}/password/reset");
+                $this->assign("url_oauth2_login", "{$oid_base_url}/login/remote");
+                $this->assign("url_oauth2_register", "{$oid_base_url}/register");
+                $this->assign("url_oauth2_fb", "{$oid_base_url}/fb/login");
             }
-
         } else {
-            $this->assign("openid_enabled", "disabled");
+            $this->assign("oauth2_enabled", "disabled");
         }
 
         // Check if Facebook plugin is active
